@@ -1,3 +1,7 @@
+## Installation
+
+`npm install promise-accum`
+
 ## Motivation
 
 Often when using promises, variable scoping becomes an issue, specifically when doing an operation that requires something along the lines of "load two things in the database, then do something based on that".
