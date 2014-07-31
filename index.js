@@ -49,5 +49,5 @@ module.exports = function promiseAccum(name) {
 	return createAccum({})(name);
 };
 
-promiseAccum.passthrough = passthrough;
-promiseAccum.merge = merge;
+module.exports.passthrough = passthrough;
+module.exports.merge = merge;

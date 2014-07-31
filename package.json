@@ -1,6 +1,6 @@
 {
   "name": "promise-accum",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "description": "Solve variable scoping and/or callback hell in promises",
   "main": "index.js",
   "scripts": {
