@@ -1,26 +1,53 @@
-function $(name) {
-	function _$(params) {
-		var accumulator = function(name) {
-			return function(value) {
-				var params2 = {};
-				for (var k in params) {
-					if (params.hasOwnProperty(k)) { params2[k] = params[k]; }
-				}
-				params2[name] = value;
-				return _$(params2);
-			};
+function createAccum(params) {
+	var accumulator = function(name) {
+		return function(value) {
+			// Create new accumulator with old params + new one.
+			var newParams = {};
+			for (var k in params) {
+				if (params.hasOwnProperty(k)) { newParams[k] = params[k]; }
+			}
+			newParams[name] = value;
+			return createAccum(newParams);
 		};
-		for (var k in params) {
-			if (params.hasOwnProperty(k)) { accumulator[k] = params[k]; }
-		}
-		accumulator.passthrough = function($) { return $; };
+	};
 
-		return accumulator;
+	// Attach parameters to accumulator.
+	for (var k in params) {
+		if (params.hasOwnProperty(k)) { accumulator[k] = params[k]; }
 	}
 
-	return _$({})(name);
+	accumulator.passthrough = passthrough;
+	accumulator.merge = merge;
+
+	return accumulator;
 }
 
-$.passthrough = function($) { return $; };
+// Useful as a replacement for .catch: `.then($.passthrough, errorHandler)`.
+function passthrough($) { return $; }
 
-module.exports = $;
+// Merge multiple contexts. Useful in a `.all`.
+function merge(accums) {
+	if (!Array.isArray(accums)) {
+		accums = Array.prototype.slice.apply(arguments);
+	}
+
+	// A bit of a hack to get a new instance - set the first key.
+	var params = {};
+
+	for (var i = 0; i < accums.length; i++) {
+		var source = accums[i];
+		for (var prop in source) {
+			if (source.hasOwnProperty(prop)) { params[prop] = source[prop]; }
+		}
+	}
+
+	return createAccum(params);
+}
+
+promiseAccum.passthrough = passthrough;
+promiseAccum.merge = merge;
+
+module.exports = function promiseAccum(name) {
+	// Initialize accumulator with no params.
+	return createAccum({})(name);
+};
