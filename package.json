@@ -1,0 +1,23 @@
+{
+  "name": "promise-accum",
+  "version": "1.3.0",
+  "description": "Solve variable scoping and/or callback hell in promises",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/BranchMetrics/promise-accum.git"
+  },
+  "keywords": [
+    "promise",
+    "scope"
+  ],
+  "author": "Dmitri Gaskin",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/BranchMetrics/promise-accum/issues"
+  },
+  "homepage": "https://github.com/BranchMetrics/promise-accum"
+}

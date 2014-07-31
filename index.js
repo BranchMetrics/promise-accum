@@ -44,10 +44,10 @@ function merge(accums) {
 	return createAccum(params);
 }
 
-promiseAccum.passthrough = passthrough;
-promiseAccum.merge = merge;
-
 module.exports = function promiseAccum(name) {
 	// Initialize accumulator with no params.
 	return createAccum({})(name);
 };
+
+promiseAccum.passthrough = passthrough;
+promiseAccum.merge = merge;
