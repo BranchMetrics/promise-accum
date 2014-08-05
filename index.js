@@ -18,6 +18,7 @@ function createAccum(params) {
 
 	accumulator.passthrough = passthrough;
 	accumulator.merge = merge;
+	accumulator.without = _without(params);
 
 	return accumulator;
 }
@@ -44,6 +45,17 @@ function merge(accums) {
 	return createAccum(params);
 }
 
+function _without(params) {
+	function without(param) {
+		var newParams = {};
+		for (var k in params) {
+			if (k != param && params.hasOwnProperty(k)) { newParams[k] = params[k]; }
+		}
+
+		return createAccum(newParams);
+	}
+}
+
 module.exports = function promiseAccum(name) {
 	// Initialize accumulator with no params.
 	return createAccum({})(name);
@@ -51,3 +63,4 @@ module.exports = function promiseAccum(name) {
 
 module.exports.passthrough = passthrough;
 module.exports.merge = merge;
+module.exports.without = function() { return createAccum({}); };
