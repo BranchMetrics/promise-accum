@@ -46,14 +46,14 @@ function merge(accums) {
 }
 
 function _without(params) {
-	function without(param) {
+	return function without(param) {
 		var newParams = {};
 		for (var k in params) {
 			if (k != param && params.hasOwnProperty(k)) { newParams[k] = params[k]; }
 		}
 
 		return createAccum(newParams);
-	}
+	};
 }
 
 module.exports = function promiseAccum(name) {
